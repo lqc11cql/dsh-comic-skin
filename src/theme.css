@@ -1,0 +1,781 @@
+/* ===========================================================================
+   Comic sticker skin — neo-brutalist manga UI for DeepSeek Harness
+   ---------------------------------------------------------------------------
+   Everything is scoped under html[data-dsh-comic], which the client module
+   adds while the skin is on. The palette is expressed as --dsw-* token
+   overrides on body, so DSH components that read design tokens follow the
+   skin without knowing it exists; the rules below add the ink outlines,
+   hard offset shadows and paper texture that tokens cannot express.
+   =========================================================================== */
+
+/* The palette lives on :root so the plugin's own sticker controls keep their
+   look while the skin is off; only the rules below are scoped. */
+:root {
+  /* --- comic palette ---------------------------------------------------- */
+  --cx-ink: #17130e;
+  --cx-ink-soft: #4a3c2a;
+  --cx-paper: #f7e8cc;
+  --cx-paper-2: #fff8e9;
+  --cx-paper-3: #efdfc0;
+  --cx-orange: #ff5a1f;
+  --cx-orange-deep: #cf3f08;
+  --cx-yellow: #ffd166;
+  --cx-yellow-soft: #ffe9a8;
+  --cx-green: #2fa96a;
+  --cx-pink: #e64f8c;
+  --cx-blue: #3f7bf6;
+  --cx-purple: #7a5cf0;
+  --cx-dot: rgba(23, 19, 14, 0.13);
+  --cx-hard: 0 0 0 2px var(--cx-ink);
+  --cx-display: 'Impact', 'Haettenschweiler', 'Arial Black', 'Segoe UI Black',
+    'Microsoft YaHei', 'PingFang SC', sans-serif;
+  --cx-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* --- token palette ------------------------------------------------------- */
+/* Written twice: the second selector keeps the palette stable when the user's
+   saved preference is dark, because body[data-ds-dark-theme] would otherwise
+   re-declare the dark set below these values. */
+html[data-dsh-comic] body,
+html[data-dsh-comic] body[data-ds-dark-theme] {
+  --dsw-alias-bg-base: var(--cx-paper);
+  --dsw-alias-bg-document-preview: var(--cx-paper-3);
+  --dsw-alias-label-document-preview: var(--cx-ink-soft);
+  --dsw-alias-bg-document-selection: rgba(255, 90, 31, 0.32);
+  --dsw-alias-bg-layer-1: var(--cx-paper-2);
+  --dsw-alias-bg-layer-2: var(--cx-paper-2);
+  --dsw-alias-bg-layer-3: #fdf2db;
+  --dsw-alias-bg-mask-1: rgba(23, 19, 14, 0.26);
+  --dsw-alias-bg-mask-2: rgba(23, 19, 14, 0.12);
+  --dsw-alias-bg-mask-3: rgba(23, 19, 14, 0.5);
+  --dsw-alias-bg-mask-photo: rgba(23, 19, 14, 0.9);
+  --dsw-alias-bg-mask-drop: rgba(255, 248, 233, 0.72);
+  --dsw-alias-bg-module-platform: var(--cx-paper-3);
+  --dsw-alias-bg-multi-select: var(--cx-paper-3);
+  --dsw-alias-bg-overlay: var(--cx-paper-2);
+  --dsw-alias-bg-skeleton: rgba(23, 19, 14, 0.08);
+
+  --dsw-alias-border-inverted: rgba(255, 248, 233, 0.6);
+  --dsw-alias-border-inverted2: rgba(255, 248, 233, 0.35);
+  --dsw-alias-border-l1: rgba(23, 19, 14, 0.18);
+  --dsw-alias-border-l2: rgba(23, 19, 14, 0.32);
+  --dsw-alias-border-l3: rgba(23, 19, 14, 0.55);
+  --dsw-alias-border-l4: var(--cx-ink);
+  --dsw-alias-border-l2-darkmode-thin: rgba(23, 19, 14, 0.32);
+  --dsw-alias-border-selected: var(--cx-orange);
+
+  --dsw-alias-brand-primary: var(--cx-orange);
+  --dsw-alias-brand-primary-invert: var(--cx-ink);
+  --dsw-alias-brand-primary-new-colorprimary-new-color: var(--cx-orange);
+  --dsw-alias-brand-text: var(--cx-ink);
+
+  --dsw-alias-button-contrast-fill: var(--cx-ink);
+  --dsw-alias-button-elevated-fill: var(--cx-paper-2);
+  --dsw-alias-button-floating-fill: var(--cx-paper-2);
+  --dsw-alias-button-floating-hover: var(--cx-yellow-soft);
+  --dsw-alias-button-ghost-active-border: var(--cx-ink);
+  --dsw-alias-button-ghost-active-fill: var(--cx-yellow-soft);
+  --dsw-alias-button-ghost-active-hover: var(--cx-yellow);
+  --dsw-alias-button-info-fill: var(--cx-orange);
+  --dsw-alias-button-info-hover: #e24a10;
+  --dsw-alias-button-primary-dimmed: #ffe1cf;
+  --dsw-alias-button-primary-fill: var(--cx-ink);
+  --dsw-alias-button-primary-hover: var(--cx-orange);
+  --dsw-alias-button-tool-bar-fill: rgba(23, 19, 14, 0.55);
+  --dsw-alias-button-tool-bar-fill-invisible: rgba(23, 19, 14, 0.4);
+  --dsw-alias-button-tool-bar-hover: rgba(23, 19, 14, 0.72);
+
+  --dsw-alias-card-fill: var(--cx-paper-2);
+  --dsw-alias-card-fill-hover: #fff1d6;
+  --dsw-alias-card-tile-fill: rgba(255, 248, 233, 0.7);
+  --dsw-alias-chart-messages: var(--cx-blue);
+  --dsw-alias-chart-system: #b3a183;
+  --dsw-alias-chart-tools: var(--cx-purple);
+
+  --dsw-alias-hovercard-bg: var(--cx-ink);
+  --dsw-alias-hovercard-label-primary: var(--cx-paper-2);
+  --dsw-alias-hovercard-label-secondary: #e8d6b6;
+  --dsw-alias-hovercard-label-tertiary: #c4b191;
+  --dsw-alias-hovercard-state-done: var(--cx-yellow);
+  --dsw-alias-hovercard-state-error: #ff7a6b;
+
+  --dsw-alias-illustration-background: var(--cx-paper-3);
+  --dsw-alias-illustration-backing: #d9c39c;
+  --dsw-alias-illustration-detail: #b99b6b;
+  --dsw-alias-illustration-inset: var(--cx-paper-2);
+  --dsw-alias-illustration-shadow: #d9c39c;
+  --dsw-alias-illustration-surface: var(--cx-yellow-soft);
+
+  --dsw-alias-interactive-bg-active: rgba(255, 90, 31, 0.18);
+  --dsw-alias-interactive-bg-hover-accent: rgba(255, 90, 31, 0.2);
+  --dsw-alias-interactive-bg-hover-danger: rgba(214, 58, 46, 0.12);
+  --dsw-alias-interactive-bg-hover-solid: #f2e2c2;
+  --dsw-alias-interactive-bg-hover: rgba(23, 19, 14, 0.06);
+
+  --dsw-alias-json-tree-hover: rgba(23, 19, 14, 0.06);
+  --dsw-alias-json-tree-icon: #5f6368;
+  --dsw-alias-json-tree-keyword: #1c00cf;
+  --dsw-alias-json-tree-number: #1c00cf;
+  --dsw-alias-json-tree-property: #881391;
+  --dsw-alias-json-tree-punctuation: #202124;
+  --dsw-alias-json-tree-string: #c41a16;
+
+  --dsw-alias-label-caption: #746449;
+  --dsw-alias-label-deep-diving: #c2410c;
+  --dsw-alias-label-deep-diving-shimmer: rgba(194, 65, 12, 0.35);
+  --dsw-alias-label-dimmed: #d6c3a1;
+  --dsw-alias-label-on-color: #fff8e9;
+  --dsw-alias-label-primary: var(--cx-ink);
+  --dsw-alias-label-primary-bluish: var(--cx-ink);
+  --dsw-alias-label-primary-dimmed: var(--cx-ink);
+  --dsw-alias-label-primary-foreground: #fff8e9;
+  --dsw-alias-label-primary-inverted: #fff8e9;
+  --dsw-alias-label-secondary: #55452f;
+  --dsw-alias-label-shimmer: rgba(23, 19, 14, 0.3);
+  --dsw-alias-label-tertiary: #7a6a52;
+  --dsw-alias-link: var(--cx-orange-deep);
+  --dsw-alias-markdown-citation: #f1e2c4;
+  --dsw-alias-markdown-code-block: #f4e6c8;
+  --dsw-alias-markdown-code-block-banner: #eeddb9;
+  --dsw-alias-markdown-code-segment-selected: var(--cx-paper-2);
+  --dsw-alias-markdown-code-segment-unselected: var(--cx-paper-3);
+  --dsw-alias-markdown-inline-code: #fff1c9;
+  --dsw-alias-markdown-placeholder: #c9b491;
+  --dsw-alias-markdown-tag: var(--cx-paper-3);
+  --dsw-alias-menu-icon: var(--cx-ink);
+  --dsw-alias-menu-group-header-fill: rgba(255, 248, 233, 0.94);
+
+  --dsw-alias-scrollbar-bg-l1: #cbb58c;
+  --dsw-alias-scrollbar-bg-l2: #cbb58c;
+  --dsw-alias-scrollbar-hover-l1: #a98f60;
+  --dsw-alias-scrollbar-hover-l2: #a98f60;
+
+  --dsw-alias-state-business-primary: #cc440e;
+  --dsw-alias-state-business-tertiary: #ffe1cf;
+  --dsw-alias-code-diff-added: rgba(47, 169, 106, 0.14);
+  --dsw-alias-code-diff-deleted: rgba(214, 58, 46, 0.14);
+  --dsw-alias-file-diff-added-bg: #eaf7e7;
+  --dsw-alias-file-diff-added-gutter: #f3fbf0;
+  --dsw-alias-file-diff-added-marker: #1a8f4d;
+  --dsw-alias-file-diff-deleted-bg: #fdeae7;
+  --dsw-alias-file-diff-deleted-gutter: #fef3f1;
+  --dsw-alias-file-diff-deleted-marker: #c0392b;
+  --dsw-alias-state-done-primary: var(--cx-purple);
+  --dsw-alias-state-error-primary: #d63a2e;
+  --dsw-alias-state-error-secondary: #f2695c;
+  --dsw-alias-state-idle-primary: #cdb994;
+  --dsw-alias-state-success-primary: var(--cx-green);
+  --dsw-alias-state-success-secondary: #4ec282;
+  --dsw-alias-state-success-tertiary: #e6f8ec;
+  --dsw-alias-state-warn-label: #a35a00;
+  --dsw-alias-state-warn-primary: #f59e0b;
+  --dsw-alias-state-warn-secondary: #f7ad31;
+  --dsw-alias-state-warn-tertiary: #fdf0d5;
+
+  --dsw-alias-switch-thumb: #ffffff;
+  --dsw-alias-toast-action: var(--cx-yellow);
+  --dsw-alias-toast-bg: var(--cx-ink);
+  --dsw-alias-toast-label: #fff8e9;
+  --dsw-alias-tooltip-bg: var(--cx-ink);
+  --dsw-alias-tooltip-key-bg: #3a3126;
+  --dsw-alias-tooltip-label: #fff8e9;
+  --dsw-alias-trajectory-accent: var(--cx-orange);
+  --dsw-alias-turn-trigger-bg: #f4e6c8;
+  --dsw-alias-turn-trigger-bg-hover: rgba(23, 19, 14, 0.06);
+
+  --dsw-specific-bubble: var(--cx-yellow-soft);
+  --dsw-specific-bubble-highlight: var(--cx-yellow);
+  --dsw-specific-file-upload-track: rgba(23, 19, 14, 0.12);
+  --dsw-specific-guide-hero: var(--cx-yellow-soft);
+  --dsw-specific-input-major: var(--cx-paper-2);
+  --dsw-specific-login-input: var(--cx-paper-2);
+  --dsw-specific-menu: var(--cx-paper-2);
+  --dsw-menu-surface-fill: var(--cx-paper-2);
+  --dsw-alias-menu-group-header-fill: #fff3dc;
+  --dsw-specific-selector: var(--cx-paper-3);
+  --dsw-specific-sidebar-fill: #f3e5c8;
+  --dsw-specific-sidebar-nav-item-active: #ffe1cf;
+  --dsw-specific-sidebar-nav-item-active-accent: var(--cx-orange);
+  --dsw-specific-sidebar-right-flash: var(--cx-orange);
+  --dsw-specific-tip: var(--cx-paper-3);
+  --dsw-specific-sidebar-tint: rgba(243, 229, 200, 0.94);
+  --dsw-specific-sidebar-wash-top: rgba(243, 229, 200, 0.9);
+  --dsw-specific-sidebar-wash-bottom: rgba(243, 229, 200, 0.9);
+  --dsw-specific-sidebar-wash-top-clear: rgba(243, 229, 200, 0);
+  --dsw-specific-sidebar-wash-bottom-clear: rgba(243, 229, 200, 0);
+
+  --dsw-alias-settings-card-fill: var(--cx-paper-2);
+  --dsw-alias-settings-card-stroke: var(--cx-ink);
+
+  /* --- geometry, elevation and syntax ----------------------------------- */
+  --dsw-radius-xs: 6px;
+  --dsw-radius-sm: 10px;
+  --dsw-radius-md: 14px;
+  --dsw-radius-lg: 18px;
+  --dsw-radius-xl: 22px;
+  --dsw-radius-panel: 24px;
+
+  /* Native elevation shapes stay untouched: hard rings on every elevated
+     control turned the UI into a field of boxes. Only the hairline takes ink. */
+  --dsw-elevation-stroke-color: rgba(23, 19, 14, 0.5);
+  --dsw-menu-backdrop-filter: none;
+  --dsw-focus-ring-color: #e04a0e;
+  --dsw-focus-ring-width: 3px;
+
+  --shiki-foreground: var(--cx-ink);
+  --shiki-background: #f4e6c8;
+  --shiki-token-constant: #1d6fd8;
+  --shiki-token-string: #2f8a3f;
+  --shiki-token-comment: #8a7a63;
+  --shiki-token-keyword: #c2185b;
+  --shiki-token-parameter: #d2420a;
+  --shiki-token-function: #6a3fd0;
+  --shiki-token-string-expression: #2f8a3f;
+  --shiki-token-punctuation: #55452f;
+  --shiki-token-link: #1d6fd8;
+}
+
+html[data-dsh-comic] {
+  /* Force light rendering for native chrome (scrollbars, form controls);
+     the presenter writes color-scheme inline, and this !important wins. */
+  color-scheme: light !important;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- paper, frame, chrome ------------------------------------------------ */
+html[data-dsh-comic] body {
+  background-color: var(--cx-paper);
+  color: var(--cx-ink);
+}
+
+html[data-dsh-comic] :is([class$='_frame'], [class*='_frame ']) {
+  background-color: var(--cx-paper);
+}
+
+html[data-dsh-comic] :is([class$='_sidebarCol'], [class*='_sidebarCol ']) {
+  background-color: #f3e5c8;
+  background-image: radial-gradient(rgba(23, 19, 14, 0.09) 1px, transparent 1.2px);
+  background-size: 12px 12px;
+  border-right: 2px solid var(--cx-ink);
+}
+
+html[data-dsh-comic] :is([class$='_centerCol'], [class*='_centerCol ']) {
+  background-color: var(--cx-paper);
+}
+
+html[data-dsh-comic] :is([class$='_rightbarCol'], [class*='_rightbarCol ']) {
+  border-left: 2px solid var(--cx-ink);
+}
+
+html[data-dsh-comic] [data-conversation-scroll],
+html[data-dsh-comic] [data-conversation-region='chat'] {
+  background-image: radial-gradient(rgba(23, 19, 14, 0.07) 1px, transparent 1.2px);
+  background-size: 14px 14px;
+  background-attachment: local;
+}
+
+html[data-dsh-comic] :is([class$='_brandName'], [class*='_brandName ']) {
+  font-family: var(--cx-display);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cx-ink);
+}
+
+html[data-dsh-comic] :is([class$='_brandMark'], [class*='_brandMark ']) {
+  filter: drop-shadow(2px 2px 0 rgba(23, 19, 14, 0.18));
+}
+
+/* Sidebar "new session" action reads as a printed orange sticker. */
+html[data-dsh-comic] :is([class$='_newSession'], [class*='_newSession ']):not(:is([class$='_newSessionRow'], [class*='_newSessionRow '])) {
+  background-color: var(--cx-orange);
+  color: var(--cx-ink);
+  border: 1.5px solid rgba(23, 19, 14, 0.9);
+  box-shadow: 2px 2px 0 0 rgba(23, 19, 14, 0.85);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+/* Plugin/settings card lists are 2px apart by default; sticker shadows need
+   more air than a hairline did. */
+html[data-dsh-comic] :is([class$='_cards'], [class*='_cards ']) {
+  gap: 12px;
+}
+
+html[data-dsh-comic] :is([class$='_dock'], [class*='_dock ']) {
+  gap: 14px;
+}
+
+html[data-dsh-comic] :is([class$='_headerUtilities'], [class*='_headerUtilities '],
+  [class$='_headerActions'], [class*='_headerActions ']) {
+  gap: 8px;
+}
+
+/* Wider than the product's 32px step so the sticker chips never meet. */
+html[data-dsh-comic] [data-conversation-tabs] {
+  gap: 40px;
+}
+
+/* Selected view tab: a black sticker chip with an orange offset shadow. The
+   chip is painted by ::before, inset from the tab's hit box, so it hugs the
+   label instead of covering the header rule under the strip; the product's
+   blue underline is cleared so it cannot show through the fill. */
+html[data-dsh-comic] [data-conversation-tabs] button[aria-selected='true'] {
+  background: transparent;
+  color: #fff8e9;
+  font-weight: 700;
+  isolation: isolate;
+}
+
+html[data-dsh-comic] [data-conversation-tabs] button[aria-selected='true']::before {
+  content: '';
+  position: absolute;
+  inset: 5px 2px 6px;
+  background: var(--cx-ink);
+  border-radius: 8px;
+  box-shadow: 3px 3px 0 0 var(--cx-orange);
+  z-index: -1;
+  pointer-events: none;
+}
+
+html[data-dsh-comic] [data-conversation-tabs] button[aria-selected='true']::after {
+  background: transparent;
+}
+
+/* --- cards, dialogs, menus ---------------------------------------------- */
+html[data-dsh-comic] :is([class$='_card'], [class*='_card ']) {
+  background-color: var(--cx-paper-2);
+  border: 1.5px solid rgba(23, 19, 14, 0.88);
+  border-radius: 12px;
+  box-shadow: 1.5px 1.5px 0 0 rgba(23, 19, 14, 0.8);
+}
+
+html[data-dsh-comic] [role='dialog'],
+html[data-dsh-comic] :is([class$='_dialogPanel'], [class*='_dialogPanel ']),
+html[data-dsh-comic] :is([class$='_modalPanel'], [class*='_modalPanel ']) {
+  background-color: var(--cx-paper-2);
+  border: 2px solid var(--cx-ink);
+  border-radius: 16px;
+  box-shadow: 5px 5px 0 0 rgba(23, 19, 14, 0.9);
+}
+
+html[data-dsh-comic] [role='dialog'] h2,
+html[data-dsh-comic] [role='dialog'] h3 {
+  font-family: var(--cx-display);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+}
+
+html[data-dsh-comic] [role='menu'],
+html[data-dsh-comic] [role='listbox'],
+html[data-dsh-comic] :is([class$='_menuPanel'], [class*='_menuPanel ']),
+html[data-dsh-comic] :is([class$='_popover'], [class*='_popover ']) {
+  background-color: var(--cx-paper-2);
+  border: 1.5px solid rgba(23, 19, 14, 0.88);
+  border-radius: 12px;
+  box-shadow: 3px 3px 0 0 rgba(23, 19, 14, 0.85);
+}
+
+html[data-dsh-comic] [role='menuitem'] {
+  border-radius: 10px;
+}
+
+html[data-dsh-comic] [role='menuitem']:hover,
+html[data-dsh-comic] [role='option'][aria-selected='true'] {
+  background-color: var(--cx-yellow-soft);
+}
+
+html[data-dsh-comic] :is([class$='_tooltip'], [class*='_tooltip ']):not(:is([class$='_tooltipTrigger'], [class*='_tooltipTrigger '])) {
+  border: 1px solid rgba(23, 19, 14, 0.35);
+  border-radius: 10px;
+}
+
+html[data-dsh-comic] :is([class$='_toast'], [class*='_toast ']) {
+  border: 2px solid var(--cx-ink);
+  border-radius: 12px;
+  box-shadow: 4px 4px 0 0 var(--cx-ink);
+}
+
+/* --- controls ----------------------------------------------------------- */
+/* Sticker outlines belong on the composer and on dialog actions. Every other
+   button keeps the component's own geometry: a page-wide 2px border turned
+   lists, the sidebar and the window chrome into a field of boxes. */
+html[data-dsh-comic] :is([data-composer-seat], [role='dialog']) button:not(.dsh-comic-dock):not(.dsh-comic-switch) {
+  border: 1.5px solid rgba(23, 19, 14, 0.9);
+  box-shadow: 1.5px 1.5px 0 0 rgba(23, 19, 14, 0.8);
+  font-weight: 650;
+  transition: transform 90ms ease, box-shadow 90ms ease, background-color 140ms ease;
+}
+
+html[data-dsh-comic] :is([data-composer-seat], [role='dialog']) button:not(.dsh-comic-dock):not(.dsh-comic-switch):hover:not(:disabled) {
+  transform: translate(-1px, -1px);
+  box-shadow: 2.5px 2.5px 0 0 rgba(23, 19, 14, 0.9);
+}
+
+html[data-dsh-comic] :is([data-composer-seat], [role='dialog']) button:not(.dsh-comic-dock):not(.dsh-comic-switch):active:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+html[data-dsh-comic] :is([data-composer-seat], [role='dialog']) button:not(.dsh-comic-dock):not(.dsh-comic-switch):disabled {
+  box-shadow: none;
+}
+
+html[data-dsh-comic] :is([data-composer-seat], [role='dialog'], [class$='_settingsCard'], [class*='_settingsCard ']) input:where(:not([type='checkbox']):not([type='radio']):not([type='range'])),
+html[data-dsh-comic] :is([data-composer-seat], [role='dialog'], [class$='_settingsCard'], [class*='_settingsCard ']) textarea,
+html[data-dsh-comic] :is([data-composer-seat], [role='dialog'], [class$='_settingsCard'], [class*='_settingsCard ']) select {
+  background-color: var(--cx-paper-2);
+  border: 2px solid var(--cx-ink);
+  border-radius: 10px;
+  color: var(--cx-ink);
+}
+
+html[data-dsh-comic] :is(input, textarea)::placeholder {
+  color: #8f7d5e;
+}
+
+/* The composer card is the sheet of paper: keep its inner editor borderless. */
+html[data-dsh-comic] :is([class$='_card'], [class*='_card ']) :is(textarea, input) {
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+html[data-dsh-comic] :is([class$='_card'], [class*='_card ']):focus-within {
+  box-shadow: var(--cx-hard), 6px 6px 0 0 var(--cx-orange);
+}
+
+/* Switch: keep the ink-outlined sticker look, but paint the outline as an
+   inset shadow. A real border shrinks the 36x20 content box (box-sizing:
+   border-box) and the 16px thumb overruns the track; an inset ring costs no
+   layout, so the thumb stays inside and only meets the ring at the edge. */
+html[data-dsh-comic] [role='switch'] {
+  box-shadow: inset 0 0 0 2px var(--cx-ink);
+}
+
+/* --- chat --------------------------------------------------------------- */
+html[data-dsh-comic] [data-message-bubble] {
+  background: var(--cx-yellow-soft);
+  border: 1.5px solid rgba(23, 19, 14, 0.9);
+  border-radius: 14px;
+  box-shadow: 2px 2px 0 0 rgba(23, 19, 14, 0.85);
+  color: var(--cx-ink);
+}
+
+html[data-dsh-comic] [data-composer-seat] :is([class$='_card'], [class*='_card ']) {
+  border-width: 2px;
+  border-radius: 18px;
+  box-shadow: 3px 3px 0 0 rgba(23, 19, 14, 0.85);
+  background-color: var(--cx-paper-2);
+}
+
+html[data-dsh-comic] [data-conversation-scroll] h1,
+html[data-dsh-comic] [data-conversation-scroll] h2,
+html[data-dsh-comic] [data-conversation-scroll] h3 {
+  font-family: var(--cx-display);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+}
+
+html[data-dsh-comic] [data-conversation-scroll] h2 {
+  text-decoration: underline;
+  text-decoration-color: var(--cx-yellow);
+  text-decoration-thickness: 0.42em;
+  text-decoration-skip-ink: none;
+  text-underline-offset: -0.12em;
+}
+
+html[data-dsh-comic] a {
+  color: var(--cx-orange-deep);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+}
+
+html[data-dsh-comic] pre {
+  background-color: #f4e6c8;
+  border: 2px solid var(--cx-ink);
+  border-radius: 12px;
+  box-shadow: 4px 4px 0 0 var(--cx-ink);
+}
+
+html[data-dsh-comic] :not(pre) > code {
+  background-color: var(--cx-yellow-soft);
+  border: 1.5px solid var(--cx-ink);
+  border-radius: 6px;
+  padding: 0 0.3em;
+  box-shadow: 1.5px 1.5px 0 0 var(--cx-ink);
+}
+
+html[data-dsh-comic] blockquote {
+  border-left: 6px solid var(--cx-orange);
+  background: rgba(255, 233, 168, 0.45);
+  border-radius: 0 10px 10px 0;
+  padding: 0.3em 0.9em;
+}
+
+html[data-dsh-comic] table {
+  border: 2px solid var(--cx-ink);
+  border-radius: 10px;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+}
+
+html[data-dsh-comic] th {
+  background-color: var(--cx-yellow-soft);
+  border-bottom: 2px solid var(--cx-ink);
+}
+
+html[data-dsh-comic] td {
+  border-bottom: 1.5px solid rgba(23, 19, 14, 0.3);
+}
+
+html[data-dsh-comic] tr:last-child td {
+  border-bottom: none;
+}
+
+/* The product clears the outer cells' padding for its frameless tables; the
+   ink frame needs that inset back so text does not sit on the border. */
+html[data-dsh-comic] table th:first-child,
+html[data-dsh-comic] table td:first-child {
+  padding-left: 16px;
+}
+
+html[data-dsh-comic] table th:last-child,
+html[data-dsh-comic] table td:last-child {
+  padding-right: 16px;
+}
+
+html[data-dsh-comic] kbd {
+  background-color: var(--cx-paper-2);
+  border: 2px solid var(--cx-ink);
+  border-radius: 6px;
+  box-shadow: 0 2px 0 0 var(--cx-ink);
+  padding: 0 0.35em;
+}
+
+html[data-dsh-comic] hr {
+  border: none;
+  border-top: 2px dashed rgba(23, 19, 14, 0.35);
+}
+
+html[data-dsh-comic] ::selection {
+  background-color: var(--cx-yellow);
+  color: var(--cx-ink);
+}
+
+html[data-dsh-comic] :focus-visible {
+  outline: 3px solid #e04a0e;
+  outline-offset: 2px;
+}
+
+/* --- scrollbars --------------------------------------------------------- */
+html[data-dsh-comic] ::-webkit-scrollbar-thumb {
+  background: #cbb58c;
+  border-radius: 999px;
+}
+
+html[data-dsh-comic] ::-webkit-scrollbar-thumb:hover {
+  background: #a98f60;
+}
+
+/* --- the plugin's own sticker controls ---------------------------------- */
+.dsh-comic-dock {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  box-sizing: border-box;
+  height: 22px;
+  padding: 0 10px;
+  border: 1.5px solid rgba(23, 19, 14, 0.9);
+  border-radius: 999px;
+  background: var(--cx-paper-2);
+  color: var(--cx-ink);
+  font-family: var(--cx-ui);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  box-shadow: 1.5px 1.5px 0 0 rgba(23, 19, 14, 0.85);
+  transform: rotate(-1.2deg);
+  cursor: pointer;
+}
+
+.dsh-comic-dock[aria-pressed='true'] {
+  background: var(--cx-orange);
+  color: var(--cx-ink);
+}
+
+.dsh-comic-dock:hover {
+  transform: rotate(-1.2deg) translate(-1px, -1px);
+  box-shadow: 3px 3px 0 0 var(--cx-ink);
+}
+
+.dsh-comic-dock:active {
+  transform: rotate(-1.2deg) translate(2px, 2px);
+  box-shadow: none;
+}
+
+.dsh-comic-dock > span {
+  flex: none;
+  white-space: nowrap;
+}
+
+.dsh-comic-dock-star {
+  color: var(--cx-orange);
+}
+
+.dsh-comic-dock[aria-pressed='true'] .dsh-comic-dock-star {
+  color: #fff8e9;
+}
+
+.dsh-comic-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 16px;
+  background: var(--cx-paper-2);
+  border: 1.5px solid rgba(23, 19, 14, 0.9);
+  border-radius: 14px;
+  box-shadow: 2px 2px 0 0 rgba(23, 19, 14, 0.85);
+}
+
+.dsh-comic-row-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.dsh-comic-row-title {
+  font-family: var(--cx-ui);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--cx-ink);
+}
+
+.dsh-comic-row-desc {
+  font-family: var(--cx-ui);
+  font-size: 12px;
+  line-height: 1.55;
+  color: #6b5a41;
+  max-width: 46ch;
+}
+
+.dsh-comic-row-hint {
+  font-family: var(--cx-ui);
+  font-size: 11px;
+  color: #7a6a52;
+}
+
+.dsh-comic-swatches {
+  display: inline-flex;
+  gap: 4px;
+  margin-left: 2px;
+}
+
+.dsh-comic-swatches i {
+  width: 12px;
+  height: 12px;
+  border: 1.5px solid var(--cx-ink);
+  border-radius: 999px;
+}
+
+.dsh-comic-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+  height: 32px;
+  padding: 0 14px 0 8px;
+  border: 1.5px solid rgba(23, 19, 14, 0.9);
+  border-radius: 999px;
+  background: var(--cx-paper-3);
+  color: var(--cx-ink);
+  font-family: var(--cx-ui);
+  font-size: 12px;
+  font-weight: 800;
+  box-shadow: 1.5px 1.5px 0 0 rgba(23, 19, 14, 0.85);
+  cursor: pointer;
+}
+
+.dsh-comic-switch.is-on {
+  background: var(--cx-ink);
+  color: #fff8e9;
+}
+
+.dsh-comic-switch-dot {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--cx-ink);
+  border-radius: 999px;
+  background: #fff8e9;
+}
+
+.dsh-comic-switch.is-on .dsh-comic-switch-dot {
+  background: var(--cx-orange);
+  box-shadow: inset 0 0 0 1px #fff8e9;
+}
+
+/* --- narrow viewports ---------------------------------------------------- */
+@media (max-width: 720px) {
+  html[data-dsh-comic] .dsh-comic-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+/* --- motion ------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html[data-dsh-comic] :is([data-composer-seat], [role='dialog']) button:not(.dsh-comic-dock):not(.dsh-comic-switch) {
+    transition: none;
+  }
+
+  .dsh-comic-dock {
+    transform: none;
+  }
+
+  .dsh-comic-dock:hover,
+  .dsh-comic-dock:active {
+    transform: none;
+  }
+}
+
+/* --- image lightbox ------------------------------------------------------
+   The viewer is a fixed dialog with no chrome of its own: the close button
+   floated alone on a pale mask and the photo sat unstyled. Skin the overlay
+   so it reads as part of the theme instead of a bare viewer. */
+html[data-dsh-comic] [role='dialog'][aria-modal='true']:has(> div > img) {
+  /* The full-viewport viewer is a backdrop, not a panel: keep the dialog
+     chrome off it and darken its mask instead. */
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  --dsw-alias-bg-mask-1: rgba(23, 19, 14, 0.62);
+}
+
+html[data-dsh-comic] [role='dialog'][aria-modal='true']:has(> div > img) > div > img {
+  border: 2px solid var(--cx-ink);
+  border-radius: 14px;
+  box-shadow: 6px 6px 0 0 rgba(255, 90, 31, 0.85);
+}
+
+html[data-dsh-comic] [role='dialog'][aria-modal='true']:has(> div > img) > div > button {
+  width: 38px;
+  height: 38px;
+  border: 2px solid var(--cx-ink);
+  background: var(--cx-paper-2);
+  color: var(--cx-ink);
+  box-shadow: 2px 2px 0 0 var(--cx-ink);
+}
+
+html[data-dsh-comic] [role='dialog'][aria-modal='true']:has(> div > img) > div > button:hover {
+  background: var(--cx-yellow);
+}

@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "Comic sticker skin",
+    "description": "Re-skins the Web UI as a neo-brutalist manga panel: cream halftone paper, ink outlines, hard offset shadows, sticker chips and an orange/black accent palette. It is a pure-CSS skin layered over the built-in light palette, so chat, sidebar, settings, menus and dialogs follow at once. Turn it on or off in Settings → General → Comic sticker skin, or with the Comic sticker under the composer. The choice is stored in this browser and applies immediately. The skin brings its own palette, so the Light/Dark appearance choice takes effect after you turn the skin off; turning the plugin off restores the previous look. Surfaces drawn by other plugins only inherit the palette tokens.",
+    "detail": "docs/DETAIL.md"
+  }
+}
