@@ -422,15 +422,6 @@ html[data-dsh-comic] :is([data-composer-seat], [role='dialog']) button:not(.dsh-
   box-shadow: none;
 }
 
-html[data-dsh-comic] :is([data-composer-seat], [role='dialog'], [class$='_settingsCard'], [class*='_settingsCard ']) input:where(:not([type='checkbox']):not([type='radio']):not([type='range'])),
-html[data-dsh-comic] :is([data-composer-seat], [role='dialog'], [class$='_settingsCard'], [class*='_settingsCard ']) textarea,
-html[data-dsh-comic] :is([data-composer-seat], [role='dialog'], [class$='_settingsCard'], [class*='_settingsCard ']) select {
-  background-color: var(--cx-paper-2);
-  border: 2px solid var(--cx-ink);
-  border-radius: 10px;
-  color: var(--cx-ink);
-}
-
 html[data-dsh-comic] :is(input, textarea)::placeholder {
   color: #8f7d5e;
 }
@@ -567,8 +558,19 @@ html[data-dsh-comic] ::selection {
   color: var(--cx-ink);
 }
 
-html[data-dsh-comic] :focus-visible {
-  outline: 3px solid #e04a0e;
+/* Keyboard focus: an ink ring on controls. Text fields are excluded because
+   their own wrapper already shows a focus border, and a 3px outline around the
+   bare input drew a square orange box inside the rounded field. */
+/* Text-field wrappers: the product paints their focus border with
+   --dsw-alias-state-business-primary, which is the skin's orange accent and
+   reads as a heavy orange box around an input. Remap that token only on the
+   wrapper, so focus stays a quiet ink border. */
+html[data-dsh-comic] :is(div, span, label):has(> :is(input, textarea):focus-visible) {
+  --dsw-alias-state-business-primary: rgba(23, 19, 14, 0.82);
+}
+
+html[data-dsh-comic] :focus-visible:not(input):not(textarea):not(select) {
+  outline: 2px solid rgba(23, 19, 14, 0.9);
   outline-offset: 2px;
 }
 
