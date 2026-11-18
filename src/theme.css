@@ -465,9 +465,11 @@ html[data-dsh-comic] [data-composer-seat] :is([class$='_card'], [class*='_card '
 html[data-dsh-comic] [data-conversation-scroll] h1,
 html[data-dsh-comic] [data-conversation-scroll] h2,
 html[data-dsh-comic] [data-conversation-scroll] h3 {
-  font-family: var(--cx-display);
+  /* A wide heavy face rather than Impact: the condensed Latin of Impact made
+     model/version headings hard to read beside the Chinese fallback. */
+  font-family: 'Arial Black', 'Segoe UI Black', 'Microsoft YaHei', 'PingFang SC', sans-serif;
   font-weight: 900;
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
 }
 
 html[data-dsh-comic] [data-conversation-scroll] h2 {
@@ -494,10 +496,10 @@ html[data-dsh-comic] pre {
 
 html[data-dsh-comic] :not(pre) > code {
   background-color: var(--cx-yellow-soft);
-  border: 1.5px solid var(--cx-ink);
+  border: 1px solid rgba(23, 19, 14, 0.75);
   border-radius: 6px;
-  padding: 0 0.3em;
-  box-shadow: 1.5px 1.5px 0 0 var(--cx-ink);
+  padding: 0 0.35em;
+  box-shadow: 1px 1px 0 0 rgba(23, 19, 14, 0.65);
 }
 
 html[data-dsh-comic] blockquote {

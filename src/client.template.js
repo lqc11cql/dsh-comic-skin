@@ -57,6 +57,11 @@ window.__ModuleLoader__.load({
       const root = document.documentElement
       if (enabled) root.setAttribute(ATTRIBUTE, 'on')
       else root.removeAttribute(ATTRIBUTE)
+      /* Windows desktop paints the native caption strip from a probe that the
+         preload samples on body style/dark-theme mutations only. Touch the body
+         style so the caption follows an instant toggle instead of waiting for
+         the next page load. */
+      document.body?.style.setProperty('--dsh-comic-skin', enabled ? '1' : '0')
     }
 
     const emit = () => {

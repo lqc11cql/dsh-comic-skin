@@ -1,6 +1,6 @@
 {
   "name": "dsh-comic-skin",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Neo-brutalist comic sticker skin for DeepSeek Harness: ink outlines, hard offset shadows, halftone paper and sticker controls.",
   "type": "module",
   "license": "MIT",
